@@ -82,7 +82,7 @@ model MentorProfile {
 
 model CourseCategory {
   id        Int      @id @default(autoincrement())
-  name      String
+  name      String @unique
   createdAt DateTime @default(now())
 
   courses Course[]
@@ -90,7 +90,7 @@ model CourseCategory {
 
 model Course {
   id         String      @id @default(uuid())
-  name       String
+  name       String 
   about      String
   price      Decimal
   banner     String

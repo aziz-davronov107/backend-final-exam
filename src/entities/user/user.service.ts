@@ -1,69 +1,80 @@
-import {  ConflictException, ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import {
+  ConflictException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { PrismaService } from 'src/core/db/prisma.service';
-import { CreateAdminDto, CreateAssistantDto, CreateMentorDto } from './dto/create-user.dto';
+import {
+  CreateAdminDto,
+  CreateAssistantDto,
+  CreateMentorDto,
+} from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-
 
 @Injectable()
 export class UserService {
-  constructor(
-      private prisma: PrismaService,
-  ){ }
+  constructor(private prisma: PrismaService) {}
 
-  async getMentors(search?:string,limit?:number,offset?:number){
+  async getMentors(search?: string, limit?: number, offset?: number) {
     let users = await this.prisma.user.findMany({
       skip: offset,
       take: limit,
       where: {
         role: 'MENTOR',
-        OR: search ?
-          [
-            {
-              fullName: { contains: search, mode: 'insensitive' }
-            },
-            {
-              phone: { contains: search, mode: 'insensitive' }
-            },
-            {
-              mentorProfile: { job: { contains: search, mode: 'insensitive' } }
-            }
-          ] : undefined
+        OR: search
+          ? [
+              {
+                fullName: { contains: search, mode: 'insensitive' },
+              },
+              {
+                phone: { contains: search, mode: 'insensitive' },
+              },
+              {
+                mentorProfile: {
+                  job: { contains: search, mode: 'insensitive' },
+                },
+              },
+            ]
+          : undefined,
       },
       include: {
-        mentorProfile: true
+        mentorProfile: true,
       },
-    })
+    });
     return {
-      status:true,
-      data: users.map(({ password, ...rest }) => rest)
-    }
+      status: true,
+      data: users.map(({ password, ...rest }) => rest),
+    };
   }
-  async getMentor(id:number){
+  async getMentor(id: number) {
     let user = await this.prisma.user.findUnique({
-      
-      where:{id, role: 'MENTOR'},
-      
+      where: { id, role: 'MENTOR' },
+
       include: {
         mentorProfile: true,
         _count: {
-          select: { coursesMentored: true }
-        }
+          select: { coursesMentored: true },
+        },
       },
-      
-    },
-    )
-    if (!user){
-      throw new NotFoundException("Foydalanuvchi topilmadi")
+    });
+    if (!user) {
+      throw new NotFoundException('Foydalanuvchi topilmadi');
     }
-    let {password,...data} = user
+    let { password, ...data } = user;
 
-     return {
-      status:true,
-      data 
-     }
+    return {
+      status: true,
+      data,
+    };
   }
-  async getAllUsers(search?:string,limit?:number,offset?:number,role?:string){
-   const where: any = {};
+  async getAllUsers(
+    search?: string,
+    limit?: number,
+    offset?: number,
+    role?: string,
+  ) {
+    const where: any = {};
 
     if (role) {
       where.role = role;
@@ -89,96 +100,98 @@ export class UserService {
       take: limit,
       where,
       include: {
-        mentorProfile: true
+        mentorProfile: true,
       },
-    })
+    });
     return {
-      status:true,
-      data: users.map(({ password, ...rest }) => rest)
-    }
+      status: true,
+      data: users.map(({ password, ...rest }) => rest),
+    };
   }
-  async getSingleUser(id:number){
+  async getSingleUser(id: number) {
     let user = await this.prisma.user.findUnique({
-      
-      where:{id},
+      where: { id },
       include: {
         mentorProfile: true,
         _count: {
-          select: { coursesMentored: true }
-        }
+          select: { coursesMentored: true },
+        },
       },
-      
-    },
-    )
-    if (!user){
-      throw new NotFoundException("Foydalanuvchi topilmadi")
+    });
+    if (!user) {
+      throw new NotFoundException('Foydalanuvchi topilmadi');
     }
-    let {password,...data} = user
+    let { password, ...data } = user;
 
     return {
-      status:true,
-      data 
-    }
-  } 
-  async  getUserByPhone(phone: string){
+      status: true,
+      data,
+    };
+  }
+  async getUserByPhone(phone: string) {
     let user = await this.prisma.user.findUnique({
-      
-      where:{phone},
+      where: { phone },
       include: {
         mentorProfile: true,
         _count: {
-          select: { coursesMentored: true }
-        }
+          select: { coursesMentored: true },
+        },
       },
-      
-    },
-    )
-    if (!user){
-      throw new NotFoundException("Foydalanuvchi topilmadi")
+    });
+    if (!user) {
+      throw new NotFoundException('Foydalanuvchi topilmadi');
     }
-    let {password,...data} = user
+    let { password, ...data } = user;
 
     return {
-      status:true,
-      data 
-    }
+      status: true,
+      data,
+    };
   }
-  async createAdmin(payload: CreateAdminDto){
-    let admin = await this.prisma.user.findUnique({where:{phone:payload.phone}})
-    if  (admin){
-      throw new ConflictException("Admin already exists!")
+  async createAdmin(payload: CreateAdminDto) {
+    let admin = await this.prisma.user.findUnique({
+      where: { phone: payload.phone },
+    });
+    if (admin) {
+      throw new ConflictException('Admin already exists!');
     }
-    await this.prisma.user.create({data:payload})
+    await this.prisma.user.create({ data: payload });
     return {
-      message:true,
-    }
+      message: true,
+    };
   }
-  async createMentor(payload: CreateMentorDto){
-    let user = await this.prisma.user.findUnique({where:{phone:payload.phone}})
-    if  (user){
-      throw new ConflictException("User already exists!")
+  async createMentor(payload: CreateMentorDto) {
+    let user = await this.prisma.user.findUnique({
+      where: { phone: payload.phone },
+    });
+    if (user) {
+      throw new ConflictException('User already exists!');
     }
-    let {phone,fullName,password,...profile} = payload
-    let new_user = await this.prisma.user.create({data:payload})
-    await this.prisma.mentorProfile.create({data:{...profile,userId:new_user.id}})
+    let { phone, fullName, password, ...profile } = payload;
+    let new_user = await this.prisma.user.create({ data: payload });
+    await this.prisma.mentorProfile.create({
+      data: { ...profile, userId: new_user.id },
+    });
     return {
-      message:true,
-    }
+      message: true,
+    };
   }
-  async createAssistant(payload: CreateAssistantDto){
-    let assistant = await this.prisma.user.findUnique({where:{phone:payload.phone}})
-    if  (assistant){
-      throw new ConflictException("assistant already exists!")
+  async createAssistant(payload: CreateAssistantDto) {
+    let assistant = await this.prisma.user.findUnique({
+      where: { phone: payload.phone },
+    });
+    if (assistant) {
+      throw new ConflictException('assistant already exists!');
     }
-    await this.prisma.user.create({data:payload})
+    await this.prisma.user.create({ data: payload });
     return {
-      message:true,
-    }
+      message: true,
+    };
   }
-  async updateMentor(id:number,payload:UpdateUserDto){
-    let user = await this.prisma.user.findUnique({where:{id}})
-    if (!user){
-      throw new NotFoundException("Foydalanuvchi topilmadi")
+  async updateMentor(id: number, payload: UpdateUserDto) {
+    let user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('Foydalanuvchi topilmadi');
     }
     let update: Record<string, any> = {};
 
@@ -189,24 +202,26 @@ export class UserService {
     });
 
     await this.prisma.user.update({
-      where: { id},
-      data:{
+      where: { id },
+      data: {
         mentorProfile: {
-          update
-        }
-      }
+          update,
+        },
+      },
     });
     return {
-      message:true,
-    }
+      message: true,
+    };
   }
-  async deleteUser(id:number){
-    let user = await this.prisma.user.findUnique({where:{id}})
-    if (!user){
-      throw new NotFoundException("Foydalanuvchi topilmadi")
+  async deleteUser(id: number) {
+    let user = await this.prisma.user.findUnique({ where: { id } });
+    if (!user) {
+      throw new NotFoundException('Foydalanuvchi topilmadi');
     }
-    if(user.phone == "+998905631170") throw new ForbiddenException("Siz Eng katta ADMINNI Ochirmoqchi bolyapsiz!")
-    await this.prisma.user.delete({where:{id}})
+    if (user.phone == '+998905631170')
+      throw new ForbiddenException(
+        'Siz Eng katta ADMINNI Ochirmoqchi bolyapsiz!',
+      );
+    await this.prisma.user.delete({ where: { id } });
   }
 }
-

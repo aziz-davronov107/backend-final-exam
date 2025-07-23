@@ -5,12 +5,15 @@ import { PrismaService } from '../db/prisma.service';
 import { Request } from 'express';
 
 @Injectable()
-export class AccessJwtStrategy extends PassportStrategy(Strategy, 'access-jwt') {
+export class AccessJwtStrategy extends PassportStrategy(
+  Strategy,
+  'access-jwt',
+) {
   constructor(private prisma: PrismaService) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
-          let token  = req?.cookies?.['access-jwt']
+          let token = req?.cookies?.['access-jwt'];
           return token ?? null;
         },
       ]),

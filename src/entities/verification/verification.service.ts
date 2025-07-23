@@ -8,121 +8,118 @@ import { MyRedisService } from 'src/common/redis/redis.service';
 
 @Injectable()
 export class VerificationService {
-  constructor (
+  constructor(
     private prisma: PrismaService,
     private smsService: SmsService,
-    private redis: MyRedisService
-  ){ }
-  private getMessage(type: EverifationsTypes,otp: string){
-      switch (type){
-        case EverifationsTypes.REGISTER:
-          return `Dry platformasidan royxatdan otish uchun tasdiqlash kodi ${otp}. Kodni hechkimga berma`
-        case EverifationsTypes.RESET_PASSWORD:
-          return `Dry platformasida parolni lamshtirish uchun uchun tasdiqlash kodi ${otp}. Kodni hechkimga berma`
-        case EverifationsTypes.EDIT_PHONE:
-          return `Dry platformasida telefonigizni almashtirish uchun tasdiqlash kodi ${otp}. Kodni hechkimga berma`
-          
-        
-      }
-  }
-  private async  throwIfUserExists(phone:string){
-    const user = await this.prisma.user.findUnique({
-        where:{
-          phone: phone,
-        }
-    })
-    if(user){
-      throw new HttpException('Phone already used',HttpStatus.BAD_REQUEST)
+    private redis: MyRedisService,
+  ) {}
+  private getMessage(type: EverifationsTypes, otp: string) {
+    switch (type) {
+      case EverifationsTypes.REGISTER:
+        return `Fixoo platformasida telefoningizni o'zgartirish uchun tasdiqlash kodi: ${otp}. Kodni hech kimga bermang!`;
+      case EverifationsTypes.RESET_PASSWORD:
+        return `Fixoo platformasida parolingizni tiklash uchun tasdiqlash kodi: ${otp}. Kodni hech kimga bermang!`;
+      case EverifationsTypes.EDIT_PHONE:
+        return `Fixoo platformasida telefoningizni o'zgartirish uchun tasdiqlash kodi: ${otp}. Kodni hech kimga bermang!`;
     }
-    return user
   }
-  private async  throwIfUserNotExists(phone:string){
+  private async throwIfUserExists(phone: string) {
     const user = await this.prisma.user.findUnique({
-        where:{
-          phone: phone,
-        }
-    })
-    if(!user){
-      throw new HttpException('User not found!',HttpStatus.BAD_REQUEST)
+      where: {
+        phone: phone,
+      },
+    });
+    if (user) {
+      throw new HttpException('Phone already used', HttpStatus.BAD_REQUEST);
     }
-    return user
+    return user;
+  }
+  private async throwIfUserNotExists(phone: string) {
+    const user = await this.prisma.user.findUnique({
+      where: {
+        phone: phone,
+      },
+    });
+    if (!user) {
+      throw new HttpException('User not found!', HttpStatus.BAD_REQUEST);
+    }
+    return user;
   }
 
-  public getKey(type: EverifationsTypes,phone: string, confirmation?:boolean){
-    const storeKeys: Record<EverifationsTypes,string> = {
+  public getKey(
+    type: EverifationsTypes,
+    phone: string,
+    confirmation?: boolean,
+  ) {
+    const storeKeys: Record<EverifationsTypes, string> = {
       [EverifationsTypes.REGISTER]: 'reg_',
       [EverifationsTypes.RESET_PASSWORD]: 'respass_',
-      [EverifationsTypes.EDIT_PHONE]: 'edph_'
+      [EverifationsTypes.EDIT_PHONE]: 'edph_',
     };
     let key = storeKeys[type];
-    if(confirmation){
+    if (confirmation) {
       key += 'cfm_';
     }
     key += phone;
-    return key
+    return key;
   }
   async sendOtp(payload: SendOtpDto) {
-    const {type, phone} = payload
-    const key = this.getKey(type,phone);
+    const { type, phone } = payload;
+    const key = this.getKey(type, phone);
     const session = await this.redis.get(key);
-    if(session){
+    if (session) {
       throw new HttpException(
         'Code already sent to user',
-        HttpStatus.BAD_REQUEST
-      )
+        HttpStatus.BAD_REQUEST,
+      );
     }
-    switch (type){
+    switch (type) {
       case EverifationsTypes.REGISTER:
         await this.throwIfUserExists(phone);
-      break
+        break;
       case EverifationsTypes.EDIT_PHONE:
         await this.throwIfUserNotExists(phone);
-      break
+        break;
       case EverifationsTypes.RESET_PASSWORD:
         await this.throwIfUserNotExists(phone);
-      break
+        break;
     }
     const otp = generateOtp();
-    await this.redis.set(key,JSON.stringify(otp),120*1000)
-    await this.smsService.sendSMS(this.getMessage(type,otp),phone)
-    return {message:'Confirmation code sent!'}
+    await this.redis.set(key, JSON.stringify(otp), 120 * 1000);
+    await this.smsService.sendSMS(this.getMessage(type, otp), phone);
+    return { message: 'Confirmation code sent!' };
   }
-  async verifyOtp(payload: VerifyOtpDto){
-    const {type,phone,otp} = payload;
-    const session = await this.redis.get(
-      this.getKey(type,phone),
-    );
-    if(!session) {
-      throw new HttpException('OTP expired!',HttpStatus.BAD_REQUEST)
+  async verifyOtp(payload: VerifyOtpDto) {
+    const { type, phone, otp } = payload;
+    const session = await this.redis.get(this.getKey(type, phone));
+    if (!session) {
+      throw new HttpException('OTP expired!', HttpStatus.BAD_REQUEST);
     }
-    if (otp !== JSON.parse(session).otp){
-      throw new HttpException('Invalide OTP',HttpStatus.BAD_REQUEST)
+    if (otp !== JSON.parse(session).otp) {
+      throw new HttpException('Invalide OTP', HttpStatus.BAD_REQUEST);
     }
-    await this.redis.delete(this.getKey(type,phone))
+    await this.redis.delete(this.getKey(type, phone));
     await this.redis.set(
-      this.getKey(type,phone,true),
+      this.getKey(type, phone, true),
       JSON.stringify(otp),
-      300*1000
-    )
+      300 * 1000,
+    );
     return {
       success: true,
-      message: 'Verified'
-    }
+      message: 'Verified',
+    };
   }
 
-  public async checkConfigOtp(payload:ICheckOtp){
-    const {type,phone,otp}= payload;
-    const session = await this.redis.get(
-      this.getKey(type,phone,true)
-    )
-    if(!session) {
-      throw new HttpException('OTP expired!',HttpStatus.BAD_REQUEST)
+  public async checkConfigOtp(payload: ICheckOtp) {
+    const { type, phone, otp } = payload;
+    const session = await this.redis.get(this.getKey(type, phone, true));
+    if (!session) {
+      throw new HttpException('OTP expired!', HttpStatus.BAD_REQUEST);
     }
-    if (otp !== JSON.parse(session).otp){
-      throw new HttpException('Invalide OTP',HttpStatus.BAD_REQUEST)
+    if (otp !== JSON.parse(session).otp) {
+      throw new HttpException('Invalide OTP', HttpStatus.BAD_REQUEST);
     }
-    await this.redis.delete(this.getKey(type,phone))
-    return true
+    await this.redis.delete(this.getKey(type, phone));
+    return true;
   }
-
 }

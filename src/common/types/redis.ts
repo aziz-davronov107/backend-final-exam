@@ -1,3 +1,3 @@
 export interface IOTPCachePayload {
-    otp:string
+  otp: string;
 }

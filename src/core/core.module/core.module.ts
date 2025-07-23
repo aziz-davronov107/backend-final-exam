@@ -18,9 +18,15 @@ import { AccessTokenGuard } from '../guards/auth-guards';
       secret: 'yandiev',
       signOptions: { expiresIn: '1h' },
     }),
-    MyRedisModel
+    MyRedisModel,
   ],
-  providers: [SmsService,AccessJwtStrategy,AccessTokenGuard,RefreshTokenGuard,RefreshJwtStrategy],
-  exports: [PassportModule, PrismaModule, JwtModule,SmsService,MyRedisModel],
+  providers: [
+    SmsService,
+    AccessJwtStrategy,
+    AccessTokenGuard,
+    RefreshTokenGuard,
+    RefreshJwtStrategy,
+  ],
+  exports: [PassportModule, PrismaModule, JwtModule, SmsService, MyRedisModel],
 })
 export class CoreModule {}

@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { VerificationService } from './verification.service';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { EverifationsTypes } from 'src/common/types/verification';
@@ -19,7 +27,7 @@ export class VerificationController {
   sendOtp(@Body() body: SendOtpDto) {
     return this.verificationService.sendOtp(body);
   }
-   @Post('verify')
+  @Post('verify')
   verifyOtp(@Body() body: VerifyOtpDto) {
     return this.verificationService.verifyOtp(body);
   }
