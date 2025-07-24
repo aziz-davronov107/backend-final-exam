@@ -1,6 +1,8 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCourseCategoryDto } from './create-course-category.dto';
+import { ApiProperty } from "@nestjs/swagger";
+import { IsString } from "class-validator";
 
-export class UpdateCourseCategoryDto extends PartialType(
-  CreateCourseCategoryDto,
-) {}
+export class UpdateCourseCategoryDto {
+  @ApiProperty({ example: 'Mobil Dasturlash', description: 'Yangi category nomi' })
+  @IsString()
+  name: string;
+}

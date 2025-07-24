@@ -1,6 +1,5 @@
 import { Module } from '@nestjs/common';
 import { UserModule } from './entities/user/user.module';
-import { CourseCategoryModule } from './entities/course/course-category/course-category.module';
 import { CourseModule } from './entities/course/course.module';
 import { LessonModule } from './entities/lesson/lesson.module';
 import { HomeworkModule } from './entities/homework/homework.module';
@@ -15,7 +14,6 @@ import { AccessTokenGuard } from './core/guards/auth-guards';
   imports: [
     CoreModule,
     UserModule,
-    CourseCategoryModule,
     CourseModule,
     LessonModule,
     HomeworkModule,

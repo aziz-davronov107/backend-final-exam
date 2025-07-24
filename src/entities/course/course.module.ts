@@ -5,6 +5,10 @@ import { extname } from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { CourseRatingService } from './ratin/ratin.service';
+import { CourseRatingController } from './ratin/ratin.controller';
+import { CourseCategoryController } from './course-category/course-category.controller';
+import { CourseCategoryService } from './course-category/course-category.service';
 
 @Module({
   imports: [
@@ -34,8 +38,8 @@ import { diskStorage } from 'multer';
       limits: { fileSize: 50 * 1024 * 1024 },
     }),
   ],
-  controllers: [CoursesController],
-  providers: [CoursesService],
+  controllers: [CoursesController,CourseRatingController,CourseCategoryController],
+  providers: [CoursesService,CourseCategoryService,CourseRatingService],
 })
 export class CourseModule {}
 

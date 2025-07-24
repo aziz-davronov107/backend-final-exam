@@ -62,6 +62,7 @@ model User {
   coursesMentored  Course[]             @relation("MentorCourses")
   ExamResult       ExamResult[]
   Permissions      Permission[]
+  transactions Transaction[]
 }
 
 model MentorProfile {
@@ -111,6 +112,7 @@ model Course {
   lessons      Lesson[]
   lessonGroups LessonGroup[]
   LastActivity LastActivity[]
+  transactions Transaction[]
 }
 
 model AssignedCourse {
@@ -135,12 +137,13 @@ model PurchasedCourse {
   course Course @relation(fields: [courseId], references: [id],onDelete: Cascade)
 
   @@id([courseId, userId])
+  @@unique([userId, courseId])
 }
 
 model Rating {
   id        Int      @id @default(autoincrement())
   rate      Int
-  comment   String
+  comment   String 
   courseId  String
   userId    Int
   createdAt DateTime @default(now())
@@ -310,4 +313,18 @@ model Permission {
   can_delete Boolean  @default(false)
   can_update Boolean  @default(false)
   user User @relation(fields: [userId], references: [id],onDelete: Cascade)
+}
+model Transaction {
+  id          String  @id @default(uuid())
+  pid         String  @unique
+  amount      Decimal
+  perform_time DateTime? 
+  create_time DateTime?
+  cancel_time DateTime?
+  state       Int                                     
+  reason      Int?                                    
+  userId      Int?                                    
+  user        User?    @relation(fields: [userId],references: [id],onDelete: SetNull)                  
+  courseId    String?                                 
+  course      Course?  @relation(fields: [courseId],references: [id],onDelete: SetNull)                 
 }
