@@ -17,9 +17,9 @@ jobs:
     - name: Deploy over SSH
       uses: appleboy/ssh-action@v0.1.10
       with:
-        host: ${{secrets.DB_HOST}}
-        username: ${{secrets.DB_USER}}
-        key: ${{secrets.SSH_KEY}}
+        host: ${{ secrets.DB_HOST }}
+        username: ${{ secrets.DB_USER }}
+        key: ${{ secrets.SSH_KEY }}
         script: |
           echo "🚀 Loyihani tayyorlash boshlanmoqda..."
 
@@ -28,7 +28,6 @@ jobs:
             echo "🐳 Docker o‘rnatilmayapti, o‘rnatilmoqda..."
             curl -fsSL https://get.docker.com -o get-docker.sh
             sh get-docker.sh
-            sudo usermod -aG docker $USER
           else
             echo "✅ Docker allaqachon o‘rnatilgan."
           fi
@@ -53,19 +52,21 @@ jobs:
             echo "🔄 Repozitoriyani yangilash..."
             git pull origin main
           fi
-          if [! -f ".env" ]; then
+
+          if [ ! -f ".env" ]; then
             echo "📄 .env fayl yaratilmoqda..."
-            echo "${{secrets.ENV_FILE_CONTENT}}" > .env
+            echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
           else
             echo "✅ .env fayl mavjud, yangilanmaydi."
           fi
+
           echo "🧹 Docker konteynerlar to‘xtatilmoqda..."
-          docker-compose down
+          sudo docker-compose down
 
           echo "🏗️ Docker image'lar qayta build qilinmoqda..."
-          docker-compose build --no-cache
+          sudo docker-compose build --no-cache
 
           echo "🔥 Docker konteynerlar ishga tushirilmoqda..."
-          docker-compose up -d
+          sudo docker-compose up -d
 
-          echo "✅ Deploy muvaffaqiyatli yakunlandi"
+          echo "✅ Deploy muvaffaqiyatli yakunlandi!"
