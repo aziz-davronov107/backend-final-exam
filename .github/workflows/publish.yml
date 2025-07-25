@@ -23,8 +23,8 @@ jobs:
         script: |
           echo "🚀 Loyihani tayyorlash boshlanmoqda..."
           echo "📁 Loyihani joylash..."
-          mkdir -p /home/ubuntu/start-up
-          cd /home/ubuntu/start-up
+          mkdir -p /home/ubuntu/up
+          cd /home/ubuntu/up
 
           if [ ! -d ".git" ]; then
             echo "📥 Git repozitoriyasini klonlash..."
