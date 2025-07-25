@@ -1,4 +1,5 @@
 # compiled output
+/.gitchub
 /dist
 /node_modules
 /build

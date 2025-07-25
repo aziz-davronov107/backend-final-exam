@@ -29,7 +29,7 @@ export class PurchasedCoursesService {
   }
 
   async createPurchasedByAdmin(data: CreatePurchasedCourseAdminDto) {
-   
+    return "salom"
   }
 }
 
