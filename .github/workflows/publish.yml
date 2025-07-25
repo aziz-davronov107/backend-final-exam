@@ -31,7 +31,7 @@ jobs:
             git clone https://github.com/aziz-davronov107/start-up
           else
             echo "🔄 Repozitoriyani yangilash..."
-            cd start-up
+            cd up
             git pull origin main
           fi
           
