@@ -52,6 +52,7 @@ jobs:
             echo "🔄 Repozitoriyani yangilash..."
             git pull origin main
           fi
+          
 
           if [ ! -f ".env" ]; then
             echo "📄 .env fayl yaratilmoqda..."
