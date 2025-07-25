@@ -30,5 +30,6 @@ export class VerificationController {
   @Post('verify')
   verifyOtp(@Body() body: VerifyOtpDto) {
     return this.verificationService.verifyOtp(body);
+    
   }
 }
