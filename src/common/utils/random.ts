@@ -1,7 +1,4 @@
-import { customAlphabet } from 'nanoid';
-
-const numbersOnly = customAlphabet('0123456789', 6);
-
 export function generateOtp(): string {
-  return numbersOnly();
+  const otp = Math.floor(100000 + Math.random() * 900000).toString();
+  return otp;
 }
