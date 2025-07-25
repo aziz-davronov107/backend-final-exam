@@ -23,15 +23,15 @@ jobs:
         script: |
           echo "🚀 Loyihani tayyorlash boshlanmoqda..."
           echo "📁 Loyihani joylash..."
-          mkdir -p /home/ubuntu/up
-          cd /home/ubuntu/up
+          mkdir -p /home/ubuntu/
+          cd /home/ubuntu/
 
           if [ ! -d ".git" ]; then
             echo "📥 Git repozitoriyasini klonlash..."
             git clone https://github.com/aziz-davronov107/start-up
           else
             echo "🔄 Repozitoriyani yangilash..."
-            cd up
+            cd start-up
             git pull origin main
           fi
           
