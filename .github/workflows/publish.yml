@@ -47,7 +47,7 @@ jobs:
 
           if [ ! -d ".git" ]; then
             echo "📥 Git repozitoriyasini klonlash..."
-            git clone https://github.com/aziz-davronov107/CI-CD.git .
+            git clone https://github.com/aziz-davronov107/start-up.git .
           else
             echo "🔄 Repozitoriyani yangilash..."
             git pull origin main
