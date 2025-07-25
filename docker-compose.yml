@@ -1,0 +1,60 @@
+version: "3.9"
+
+services:
+  db:
+    image: postgres:16
+    container_name: new_post
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: yandiev
+      POSTGRES_DB: yandiev
+    ports:
+      - "5444:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - elearning_net
+
+  redis:
+    image: "bitnami/redis:7.2"
+    container_name: "elearning_redis"
+    restart: unless-stopped
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    volumes:
+      - redis:/bitnami/redis/data
+    environment:
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+      REDIS_DB: ${REDIS_DB}
+      REDIS_IO_THREADS: 4
+      REDIS_IO_THREADS_DO_READS: yes
+      REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
+    networks:
+      - elearning_net
+
+  app:
+    build: .
+    container_name: new_app
+    ports:
+      - "1170:3000"
+    depends_on:
+      - db
+      - redis
+    command: >
+      sh -c "
+        npx prisma generate &&
+        npx prisma migrate deploy &&
+        npm run start:prod
+      "
+    networks:
+      - elearning_net
+
+volumes:
+  postgres_data:
+  redis:
+
+networks:
+  elearning_net:
+    driver: bridge

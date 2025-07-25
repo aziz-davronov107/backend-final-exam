@@ -6,9 +6,9 @@ export class MyRedisService {
   private client: Redis;
   async onModuleInit() {
     this.client = new Redis({
-      host: 'localhost',
+      host: process.env.REDIS_HOST || 'redis',
       port: 6379,
-      password: 'yandiev',
+      password: process.env.REDIS_PASSWORD || undefined,
     });
   }
 
