@@ -4,8 +4,8 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile      # <-- your build settings
-    container_name: lms-app        # <-- now at the same level as `build:`
+      dockerfile: Dockerfile
+    container_name: lms-app
     restart: always
     depends_on:
       - db
