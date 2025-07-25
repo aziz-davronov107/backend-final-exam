@@ -28,11 +28,9 @@ jobs:
               echo "📥 Git repozitoriyasini klonlash..."
               git clone https://github.com/aziz-davronov107/start-up.git
             fi
-
+            
             echo "🔄 Repozitoriyani yangilash..."
             cd start-up
-            git reset --hard
-            git clean -fd
             git pull origin main
 
             echo "🧹 Docker konteynerlar to‘xtatilmoqda..."
