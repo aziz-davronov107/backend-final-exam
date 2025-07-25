@@ -43,12 +43,12 @@ jobs:
           fi
 
           echo "🧹 Docker konteynerlar to‘xtatilmoqda..."
-          sudo docker-compose down
+          docker-compose down
 
           echo "🏗️ Docker image'lar qayta build qilinmoqda..."
-          sudo docker-compose build --no-cache
+          docker-compose build --no-cache
 
           echo "🔥 Docker konteynerlar ishga tushirilmoqda..."
-          sudo docker-compose up -d
+          docker-compose up -d
 
           echo "✅ Deploy muvaffaqiyatli yakunlandi!"
