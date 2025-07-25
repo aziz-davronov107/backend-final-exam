@@ -32,14 +32,14 @@ jobs:
           else
             echo "🔄 Repozitoriyani yangilash..."
             cd start-up
-            git pull origin main
+            git pull
           fi
 
           echo "🧹 Docker konteynerlar to‘xtatilmoqda..."
           docker-compose down
 
           echo "🏗️ Docker image'lar qayta build qilinmoqda..."
-          docker-compose build --no-cache
+          docker-compose build
 
           echo "🔥 Docker konteynerlar ishga tushirilmoqda..."
           docker-compose up -d
