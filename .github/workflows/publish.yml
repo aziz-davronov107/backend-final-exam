@@ -34,14 +34,6 @@ jobs:
             cd start-up
             git pull origin main
           fi
-          
-
-          if [ ! -f ".env" ]; then
-            echo "📄 .env fayl yaratilmoqda..."
-            echo "${{ secrets.ENV_FILE_CONTENT }}" > .env
-          else
-            echo "✅ .env fayl mavjud, yangilanmaydi."
-          fi
 
           echo "🧹 Docker konteynerlar to‘xtatilmoqda..."
           docker-compose down
