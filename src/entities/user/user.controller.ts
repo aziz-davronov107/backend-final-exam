@@ -26,6 +26,7 @@ import { Roles } from 'src/core/decorators/role.decorator';
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
+  
 
   @Public()
   @Get('mentors')

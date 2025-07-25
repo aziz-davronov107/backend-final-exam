@@ -1,60 +1,41 @@
-version: "3.9"
+version: '3.9'
 
 services:
-  db:
-    image: postgres:16
-    container_name: new_post
-    restart: always
-    environment:
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: yandiev
-      POSTGRES_DB: yandiev
-    ports:
-      - "5444:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
-    networks:
-      - elearning_net
-
-  redis:
-    image: "bitnami/redis:7.2"
-    container_name: "elearning_redis"
-    restart: unless-stopped
-    ports:
-      - "${REDIS_PORT}:${REDIS_PORT}"
-    volumes:
-      - redis:/bitnami/redis/data
-    environment:
-      REDIS_PASSWORD: ${REDIS_PASSWORD}
-      REDIS_PORT: ${REDIS_PORT}
-      REDIS_DB: ${REDIS_DB}
-      REDIS_IO_THREADS: 4
-      REDIS_IO_THREADS_DO_READS: yes
-      REDIS_DISABLE_COMMANDS: FLUSHDB,FLUSHALL
-    networks:
-      - elearning_net
-
   app:
-    build: .
-    container_name: new_app
-    ports:
-      - "1170:3000"
+    build:
+      context: .
+      dockerfile: Dockerfile      # <-- your build settings
+    container_name: lms-app        # <-- now at the same level as `build:`
+    restart: always
     depends_on:
       - db
       - redis
-    command: >
-      sh -c "
-        npx prisma generate &&
-        npx prisma migrate deploy &&
-        npm run start:prod
-      "
-    networks:
-      - elearning_net
+    ports:
+      - "3000:3000"
+    env_file:
+      - .env  
+    environment:
+      DATABASE_URL: ${DATABASE_URL}
+      REDIS_HOST: ${REDIS_HOST}
+      REDIS_PASSWORD: ${REDIS_PASSWORD}
+      REDIS_PORT: ${REDIS_PORT}
+
+  db:
+    image: postgres:15-alpine
+    container_name: lms-db        # <-- also at this level
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    volumes:
+      - db-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    container_name: lms-redis
+    volumes:
+      - redis-data:/data
 
 volumes:
-  postgres_data:
-  redis:
-
-networks:
-  elearning_net:
-    driver: bridge
+  db-data:
+  redis-data:

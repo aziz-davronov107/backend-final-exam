@@ -22,28 +22,9 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         script: |
           echo "🚀 Loyihani tayyorlash boshlanmoqda..."
-
-          # Docker o‘rnatilganligini tekshirish
-          if ! [ -x "$(command -v docker)" ]; then
-            echo "🐳 Docker o‘rnatilmayapti, o‘rnatilmoqda..."
-            curl -fsSL https://get.docker.com -o get-docker.sh
-            sh get-docker.sh
-          else
-            echo "✅ Docker allaqachon o‘rnatilgan."
-          fi
-
-          # Docker Compose o‘rnatilganligini tekshirish
-          if ! [ -x "$(command -v docker-compose)" ]; then
-            echo "📦 Docker Compose o‘rnatilmayapti, o‘rnatilmoqda..."
-            sudo curl -L "https://github.com/docker/compose/releases/download/v2.24.6/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-            sudo chmod +x /usr/local/bin/docker-compose
-          else
-            echo "✅ Docker Compose allaqachon o‘rnatilgan."
-          fi
-
           echo "📁 Loyihani joylash..."
-          mkdir -p /home/ubuntu/new
-          cd /home/ubuntu/new
+          mkdir -p /home/ubuntu/start-up
+          cd /home/ubuntu/start-up
 
           if [ ! -d ".git" ]; then
             echo "📥 Git repozitoriyasini klonlash..."
