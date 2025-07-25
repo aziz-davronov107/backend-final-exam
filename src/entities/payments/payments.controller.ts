@@ -8,18 +8,20 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { PaymentsService } from './payments.service';
-import { PaymeRequest } from '../types/payments/payme';
 import {
   ApiBearerAuth,
+  ApiExcludeController,
   ApiExcludeEndpoint,
   ApiOperation,
   ApiTags,
 } from '@nestjs/swagger';
-import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import { RolesGuard } from '../global/guards/roles.guard';
-import { Roles } from '../global/decorators/roles';
-import { TAuthUser, UserRole } from '../types/user';
+
+
 import { CreatePaymentDto } from './dto/create-payment.dto';
+import { UserRole } from '@prisma/client';
+import { Roles } from 'src/core/decorators/role.decorator';
+import { TAuthUser } from 'src/common/types/user';
+import { PaymeRequest } from 'src/common/types/payme';
 
 // @ApiExcludeController(true)
 @ApiTags('Payment')
@@ -29,8 +31,8 @@ export class PaymentsController {
 
   @ApiOperation({ summary: UserRole.STUDENT })
   @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard, RolesGuard)
-  @Roles([UserRole.STUDENT])
+
+  @Roles(UserRole.STUDENT)
   @Post('api/payment/checkout')
   createPayment(@Body() payload: CreatePaymentDto, @Req() req: any) {
     return this.paymentsService.createPayment(payload, req.user as TAuthUser);
