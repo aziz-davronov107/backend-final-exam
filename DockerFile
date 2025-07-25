@@ -6,7 +6,6 @@ COPY tsconfig.json tsconfig.build.json nest-cli.json ./
 COPY prisma ./prisma
 RUN npx prisma generate
 COPY src ./src
-COPY uploads ./uploads
 RUN npm run build   # now tsconfig.json is present, so this will succeed
 FROM node:18-alpine
 WORKDIR /app
