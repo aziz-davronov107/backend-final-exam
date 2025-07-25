@@ -20,6 +20,7 @@ import { PuchasedCourseModule } from './entities/puchased-course/purchased-cours
     HomeworkModule,
     ExamModule,
     VerificationModule,
+    
     AuthModule,
     PuchasedCourseModule,
   ],
