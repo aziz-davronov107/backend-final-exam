@@ -16,6 +16,7 @@ export class VerificationService {
   private getMessage(type: EverifationsTypes, otp: string) {
     switch (type) {
       case EverifationsTypes.REGISTER:
+        
         return `Fixoo platformasida telefoningizni o'zgartirish uchun tasdiqlash kodi: ${otp}. Kodni hech kimga bermang!`;
       case EverifationsTypes.RESET_PASSWORD:
         return `Fixoo platformasida parolingizni tiklash uchun tasdiqlash kodi: ${otp}. Kodni hech kimga bermang!`;
