@@ -1,26 +1,133 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateLessonDto } from './dto/create-lesson.dto';
 import { UpdateLessonDto } from './dto/update-lesson.dto';
+import { ViewLessonDto } from './dto/view-lesson.dto';
+import { PrismaService } from 'src/core/db/prisma.service';
+import { dot } from 'node:test/reporters';
 
 @Injectable()
-export class LessonService {
-  create(createLessonDto: CreateLessonDto) {
-    return 'This action adds a new lesson';
+export class LessonsService {
+  constructor(private readonly prisma: PrismaService) {} 
+  async getSingleLesson(userId:number,lessonId: string) {
+    let puchasedCourse = await this.prisma.purchasedCourse.findFirst({
+      where: { userId, course: { lessons: { some: { id: lessonId } } } },
+    })
+    if (!puchasedCourse) {
+      throw new NotFoundException('Purchased course not found for this lesson');
+    }
+    let lesson = await this.prisma.lesson.findFirst({
+      where: { id: lessonId },
+      include: { Course: true, lessonFiles: true ,homework: true,lessonViews: true},
+    })
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+    return {
+      message: true,
+      data: lesson,
+    };
   }
 
-  findAll() {
-    return `This action returns all lesson`;
+  async putLessonView(userId:number,lessonId: string, dto: ViewLessonDto) {
+    const {view=true} = dto;  
+    let lessonView = await this.prisma.lessonView.create({
+      data: {
+        lessonId,
+        userId,
+        view,
+      },
+    })
+    return {
+      menuber: true,
+      data: lessonView,
+    }
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} lesson`;
+  async getLessonDetail(id: string) {
+    let lesson = await this.prisma.lesson.findFirst({
+      where: { id },
+      include: { Course: true, lessonFiles: true, homework: true, lessonViews: true },
+    });
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }   
+
+    return {
+      message: true,
+      data: lesson,
+    };
   }
 
-  update(id: number, updateLessonDto: UpdateLessonDto) {
-    return `This action updates a #${id} lesson`;
+  async createLesson(dto: CreateLessonDto, file: {video:Express.Multer.File}) {
+    let { name,about,groupId,videoUrl} = dto;
+    if (!file && !videoUrl) {
+      throw new NotFoundException('Video file or URL is required');
+    }
+    let  videoPath = '';
+    if (file) {
+      const video = file.video[0];
+      videoPath = `${process.env.STATIC_URL}video/${video.filename}`;
+    }
+    let lesson = await this.prisma.lesson.create({
+      data: {
+        name,
+        about,
+        groupId,
+        video: videoUrl || videoPath,
+      }
+    })
+
+    return {
+      message: true,
+      data: lesson,      
+    };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} lesson`;
+  async updateLesson(id: string, dto: UpdateLessonDto, file:{video:Express.Multer.File}) {
+    let { name, about, groupId, videoUrl } = dto;
+    let  videoPath = '';
+    if (file) {
+      const video = file.video[0];
+      videoPath = `${process.env.STATIC_URL}video/${video.filename}`;
+    }
+    let data:any = {}
+    if (name){
+      data.name = name;
+    }
+    if (about) {
+      data.about = about;
+    }
+    if (groupId) {
+      data.groupId = groupId;
+    }
+    if (videoUrl || videoPath) {
+      data.video = videoUrl || videoPath;
+    }
+
+
+    let lesson = await this.prisma.lesson.update({
+      where: { id },
+      data,     
+    });
+    return {
+      message: true,
+      data: lesson,
+    }
+  }
+
+  async deleteLesson(id: string) {
+    let lesson = await this.prisma.lesson.findFirst({
+      where: { id },
+    });
+    if (!lesson) {
+      throw new NotFoundException('Lesson not found');
+    }
+    await this.prisma.lesson.delete({
+      where: { id },
+    });
+    return {
+      message: true,
+    }
+
   }
 }

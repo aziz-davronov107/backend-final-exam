@@ -10,6 +10,8 @@ import { AuthModule } from './entities/auth/auth.module';
 import { APP_GUARD } from '@nestjs/core';
 import { AccessTokenGuard } from './core/guards/auth-guards';
 import { PuchasedCourseModule } from './entities/puchased-course/purchased-course.module';
+import { RolesGuard } from './core/guards/role-guards';
+import { SeederModule } from './common/seeders/seeder.module';
 
 @Module({
   imports: [
@@ -22,11 +24,16 @@ import { PuchasedCourseModule } from './entities/puchased-course/purchased-cours
     VerificationModule,
     AuthModule,
     PuchasedCourseModule,
+    SeederModule,
   ],
   providers: [
     {
       provide: APP_GUARD,
       useClass: AccessTokenGuard,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: RolesGuard,
     },
   ],
 })

@@ -1,15 +1,15 @@
 import { Controller, Get, Post, Param, Query, Body, Req, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiParam } from '@nestjs/swagger';
 import {
   GetPurchasedCoursesMineQueryDto,
   PurchaseCourseDto,
   CreatePurchasedCourseAdminDto,
   GetCourseStudentsQueryDto,
 } from './dto/purchased-courses.dto';
-import { AuthGuard } from '@nestjs/passport';
 import { UserRole } from '@prisma/client';
 import { PurchasedCoursesService } from './puchased-course.service';
 import { Roles } from 'src/core/decorators/role.decorator';
+import { IsUUID } from 'class-validator';
 
 @ApiTags('purchased-courses')
 @Controller('api/purchased-courses')
@@ -24,6 +24,7 @@ export class PurchasedCoursesController {
 
   @Get('mine/:course_id')
   @Roles(UserRole.STUDENT)
+  @ApiParam({ name: 'course_id', type: IsUUID, description: 'Course ID'})
   getMineById(@Req() req, @Param('course_id') courseId: string) {
     return this.service.getMineById(req.user.id, courseId);
   }
