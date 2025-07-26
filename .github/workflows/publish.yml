@@ -18,10 +18,11 @@ jobs:
           host: ${{ secrets.SSH_HOST }}
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
+          debug: true
           script: |
             echo "🚀 Loyihani tayyorlash boshlanmoqda..."
 
-            cd /home/ubuntu/
+            cd /home/bobur/
 
             if [ ! -d "start-up" ]; then
               echo "📥 Git repozitoriyasini klonlash..."
