@@ -44,4 +44,5 @@ jobs:
             docker compose up -d
 
             echo "📜 Loglar: "
+            docker compose logs --tail=100
             echo "✅ Deploy muvaffaqiyatli yakunlandi!"
