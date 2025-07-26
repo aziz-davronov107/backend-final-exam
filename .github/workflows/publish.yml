@@ -32,7 +32,7 @@ jobs:
             echo "🔄 Repozitoriyani yangilash..."
             cd start-up
             git pull origin main
-            
+
 
             echo "🧹 Docker konteynerlar va volume tozalanmoqda..."
             docker compose down -v
@@ -44,6 +44,4 @@ jobs:
             docker compose up -d
 
             echo "📜 Loglar: "
-            docker compose logs -f
-
             echo "✅ Deploy muvaffaqiyatli yakunlandi!"
