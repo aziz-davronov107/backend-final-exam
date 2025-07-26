@@ -25,6 +25,7 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "🚀 Loyihani tayyorlash boshlanmoqda..."
+            
 
             cd /home/ubuntu/
 
