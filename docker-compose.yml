@@ -16,7 +16,7 @@ services:
       - .env
     environment:
       DATABASE_URL: ${DATABASE_URL}
-      REDIS_HOST: redis
+      REDIS_HOST: lms-redis2
       REDIS_PORT: 6379
       JWT_ACCESS_TOKEN_SECRET: ${JWT_ACCESS_TOKEN_SECRET}
       JWT_REFRESH_TOKEN_SECRET: ${JWT_REFRESH_TOKEN_SECRET}
@@ -34,7 +34,7 @@ services:
 
   redis:
     image: redis:7-alpine
-    container_name: lms-redis
+    container_name: lms-redis2
     volumes:
       - redis-data:/data
 
