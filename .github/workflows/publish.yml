@@ -13,10 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Copy .env file
-        run: |
-          echo "${{ secrets.ENV_FILE }}" > .env
-
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
@@ -25,7 +21,6 @@ jobs:
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "🚀 Loyihani tayyorlash boshlanmoqda..."
-            
 
             cd /home/ubuntu/
 
@@ -38,16 +33,10 @@ jobs:
             cd start-up
             git pull origin main
 
-            echo "📄 .env faylni yozib olish..."
+            echo "📄 .env faylni yozib olinmoqda..."
             echo "${{ secrets.ENV_FILE }}" > .env
 
-            echo "🧹 Docker konteynerlar to‘xtatilmoqda..."
-            docker-compose down
+            echo "🧹 Docker konteynerlar va volume tozalanmoqda..."
+            docker compose down -v
 
-            echo "🏗️ Docker image'lar qayta build qilinmoqda..."
-            docker-compose build
-
-            echo "🔥 Docker konteynerlar ishga tushirilmoqda..."
-            docker-compose up -d
-
-            echo "✅ Deploy muvaffaqiyatli yakunlandi!"
+            echo "🏗️ Docker image'lar --no-cache bilan qayta buil
