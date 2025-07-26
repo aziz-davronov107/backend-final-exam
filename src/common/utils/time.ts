@@ -11,7 +11,6 @@ export function getPastTime(seconds: number) {
 
 export function secToMills(seconds: number) {
   return seconds * 1000;
-  
 }
 
 export function getInMills(date: Date | number | string) {
