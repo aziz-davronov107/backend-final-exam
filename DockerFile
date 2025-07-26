@@ -1,29 +1,34 @@
+# 1-bosqich: Build bosqichi
 FROM node:22-alpine AS builder
-
 WORKDIR /app
 
+# Faqat kerakli fayllarni birinchi COPY qilib, cache’dan foydalanamiz
 COPY package*.json ./
 RUN npm install
 
+# Prisma va src fayllarini alohida COPY qilamiz
 COPY prisma ./prisma
+COPY tsconfig*.json ./
 COPY src ./src
-COPY tsconfig.build.json .
 
+# Prisma client generate
 RUN npx prisma generate
+
+# NestJS build
 RUN npm run build
 
-
+# 2-bosqich: faqat keraklilarni ishga tushirish uchun
 FROM node:22-alpine
-
 WORKDIR /app
 
+# Prod dependencies only
 COPY package*.json ./
-RUN npm install --production
+RUN npm install --omit=dev
 
+# Kerakli fayllarni builder’dan nusxalash
 COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/prisma ./prisma
 COPY --from=builder /app/node_modules/.prisma ./node_modules/.prisma
-COPY --from=builder /app/node_modules/@prisma/client ./node_modules/@prisma/client
+COPY --from=builder /app/prisma ./prisma
 
 EXPOSE 3000
 CMD ["node", "dist/main"]
