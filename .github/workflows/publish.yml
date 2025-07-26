@@ -8,7 +8,6 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -16,8 +15,8 @@ jobs:
       - name: Deploy over SSH
         uses: appleboy/ssh-action@v0.1.10
         with:
-          host: ${{ secrets.DB_HOST }}
-          username: ${{ secrets.DB_USER }}
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_KEY }}
           script: |
             echo "🚀 Loyihani tayyorlash boshlanmoqda..."
@@ -26,7 +25,7 @@ jobs:
 
             if [ ! -d "start-up" ]; then
               echo "📥 Git repozitoriyasini klonlash..."
-              git clone https://github.com/aziz-davronov107/start-up.git
+              git clone https://github.com/Bobur815/Azizbek_imtihon.git
             fi
 
             echo "🔄 Repozitoriyani yangilash..."
