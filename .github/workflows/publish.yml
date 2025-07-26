@@ -22,7 +22,8 @@ jobs:
           script: |
             echo "🚀 Loyihani tayyorlash boshlanmoqda..."
 
-            cd /home/bobur/
+            mkdir -p /home/${{ secrets.SSH_USER }}/Azizbek_5-oy_imtihon
+            cd /home/${{ secrets.SSH_USER }}/Azizbek_5-oy_imtihon
 
             if [ ! -d "start-up" ]; then
               echo "📥 Git repozitoriyasini klonlash..."
