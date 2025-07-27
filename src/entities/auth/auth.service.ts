@@ -46,10 +46,7 @@ export class AuthService {
     let user = await this.prisma.user.findUnique({
       where: { phone: payload.phone },
     });
-    const isValid =
-      !!user && (await bcrypt.compare(payload.password, user.password));
-
-    if (isValid) {
+    if (!user || !(await bcrypt.compare(payload.password, user.password))) {
       throw new HttpException(
         'Phone or password Incorect',
         HttpStatus.BAD_REQUEST,

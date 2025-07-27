@@ -1,5 +1,5 @@
 import { AuthService } from './auth.service';
-import { Controller, Post, Req, Res, UseGuards } from '@nestjs/common';
+import { Controller, Post, Req, Res, UseGuards, Body } from '@nestjs/common';
 import { CreateDto, LoginDto } from './dto/auth.dto';
 import { Response } from 'express';
 import { ApiBody, ApiTags } from '@nestjs/swagger';
@@ -14,7 +14,7 @@ export class AuthControler {
   @Post('register')
   @ApiBody({ type: CreateDto })
   @Public()
-  async register(data: CreateDto, @Res({ passthrough: true }) res: Response) {
+  async register(@Body() data: CreateDto, @Res({ passthrough: true }) res: Response) {
     let token = await this.authService.register(data);
     let { access_token, refresh_token } = token;
     res.cookie('access-token', access_token, {
@@ -35,7 +35,7 @@ export class AuthControler {
   @Post('login')
   @ApiBody({ type: LoginDto })
   @Public()
-  async login(@Res({ passthrough: true }) res: Response, data: LoginDto) {
+  async login(@Res({ passthrough: true }) res: Response,@Body() data: LoginDto) {
     let token = await this.authService.login(data);
 
     let { access_token, refresh_token } = token;
