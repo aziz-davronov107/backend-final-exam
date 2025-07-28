@@ -29,7 +29,18 @@ export class CreateDto {
   otp: string;
 }
 
-export class LoginDto extends PickType(CreateDto, [
-  'phone',
-  'password',
-] as const) {}
+export class LoginDto {
+  @ApiProperty({
+    description: 'Telefon raqam (E.164 formatda, +998901234567 misolida)',
+    example: '+998905341009',
+  })
+  @IsPhoneNumber()
+  phone: string;
+
+  @ApiProperty({
+    description: 'Parol (kamida 6 ta belgidan iborat)',
+    example: 'yandiev',
+  })
+  @IsString()
+  password: string;
+}
