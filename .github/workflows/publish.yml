@@ -25,13 +25,13 @@ jobs:
             mkdir -p /home/${{ secrets.SSH_USER }}/Azizbek_5-oy_imtihon
             cd /home/${{ secrets.SSH_USER }}/Azizbek_5-oy_imtihon
 
-            if [ ! -d "start-up" ]; then
+            if [ ! -d "Azizbek_imtihon" ]; then
               echo "📥 Git repozitoriyasini klonlash..."
               git clone https://github.com/Bobur815/Azizbek_imtihon.git
             fi
 
             echo "🔄 Repozitoriyani yangilash..."
-            cd start-up
+            cd Azizbek_imtihon
             git pull origin main
 
 
