@@ -34,7 +34,6 @@ jobs:
             cd Azizbek_imtihon
             git pull origin main
 
-
             echo "🧹 Docker konteynerlar va volume tozalanmoqda..."
             docker compose down -v
 
