@@ -1,4 +1,5 @@
 import { Injectable, OnModuleInit } from '@nestjs/common';
+import { UserRole } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 import { PrismaService } from 'src/core/db/prisma.service';
 
@@ -14,10 +15,10 @@ export class SeederService implements OnModuleInit {
     const phone = '+998905341009';
     const fullName = 'Azizbek Yandiev';
     const password = 'yandiev';
-    const role = 'ADMIN'; // UserRole enumdagi qiymat
+    const role = UserRole.ADMIN; // UserRole enumdagi qiymat
     const image = null; // yoki biror URL string
 
-    const existingUser = await this.prisma.user.findFirst({
+    const existingUser = await this.prisma.user.findUnique({
       where: { phone },
     });
 

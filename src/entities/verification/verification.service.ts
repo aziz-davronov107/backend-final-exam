@@ -86,7 +86,7 @@ export class VerificationService {
         break;
     }
     const otp = generateOtp();
-    await this.redis.set(key, JSON.stringify(otp), 120 * 1000);
+    await this.redis.set(key, JSON.stringify({ otp }), 120);
     await this.smsService.sendSMS(this.getMessage(type, otp), phone);
     return { message: 'Confirmation code sent!' };
   }
@@ -100,11 +100,13 @@ export class VerificationService {
       throw new HttpException('Invalide OTP', HttpStatus.BAD_REQUEST);
     }
     await this.redis.delete(this.getKey(type, phone));
+
     await this.redis.set(
       this.getKey(type, phone, true),
-      JSON.stringify(otp),
-      300 * 1000,
+      JSON.stringify({ otp }),
+      300,
     );
+
     return {
       success: true,
       message: 'Verified',

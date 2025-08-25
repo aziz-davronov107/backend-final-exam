@@ -1,8 +1,8 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConflictException, HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from 'src/core/db/prisma.service';
 import { VerificationService } from '../verification/verification.service';
-import bcrypt from 'bcrypt';
+import * as bcrypt from 'bcrypt';
 import { CreateDto, LoginDto } from './dto/auth.dto';
 import { EverifationsTypes } from 'src/common/types/verification';
 
@@ -34,12 +34,22 @@ export class AuthService {
       type: EverifationsTypes.REGISTER,
       ...payload,
     });
+
+    
     let { phone, password, fullName } = payload;
+    const exists = await this.prisma.user.findUnique({
+      where: { phone },
+    });
+    if (exists) {
+      throw new ConflictException('User already exists');
+    }
     let hash = await bcrypt.hash(password, 10);
     const new_user = await this.prisma.user.create({
       data: { phone, password: hash, fullName },
     });
+  
     const token = await this.getToken(new_user.id);
+    console.log(token)
     return token;
   }
   async login(payload: LoginDto) {

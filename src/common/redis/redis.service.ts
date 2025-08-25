@@ -4,12 +4,9 @@ import Redis from 'ioredis';
 @Injectable()
 export class MyRedisService {
   private client: Redis;
+
   async onModuleInit() {
-    this.client = new Redis({
-      host: process.env.REDIS_HOST || 'redis',
-      port: 6379,
-      password: process.env.REDIS_PASSWORD || undefined,
-    });
+    this.client = new Redis(process.env.REDIS_URL!);
   }
 
   async set(key: string, value: string, second: number) {
