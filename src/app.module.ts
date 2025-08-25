@@ -25,6 +25,7 @@ import { SeederModule } from './common/seeders/seeder.module';
     AuthModule,
     PuchasedCourseModule,
     SeederModule,
+    
   ],
   providers: [
     {
