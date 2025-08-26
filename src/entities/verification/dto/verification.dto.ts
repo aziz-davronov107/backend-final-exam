@@ -11,7 +11,6 @@ export class SendOtpDto {
   @ApiProperty({
     example: '+998905341009',
   })
-  @IsMobilePhone()
   @IsString()
   phone: string;
 }
