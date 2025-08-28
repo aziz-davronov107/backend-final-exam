@@ -1,0 +1,270 @@
+[33mcommit 7ccd3ebdb6bf74ae58bd35afa54f7c4023fb780e[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mmain[m[33m, [m[1;31morigin/main[m[33m)[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Thu Aug 28 15:34:22 2025 +0500
+
+    fir
+
+M	.gitignore
+
+[33mcommit 73f9c8754c505714e8250764e076bc3142431514[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Thu Aug 28 15:22:25 2025 +0500
+
+    Azizbek
+
+A	Dockerfile
+A	docker-compose.yml
+M	package.json
+M	src/common/redis/redis.service.ts
+M	src/common/seeders/seeder.service.ts
+
+[33mcommit 5e3fdb45c966e950079b5b1ef0ca0f1cc12e711f[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Thu Aug 28 14:37:40 2025 +0500
+
+    els
+
+M	src/common/seeders/seeder.service.ts
+
+[33mcommit a30ffd32f96568596fecc79d718cf31db4307991[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Thu Aug 28 14:22:23 2025 +0500
+
+    firs
+
+M	src/common/seeders/seeder.service.ts
+
+[33mcommit 6f3972067e608805ba170e3db226c30083f017ce[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Thu Aug 28 14:15:13 2025 +0500
+
+    first commit
+
+M	src/common/seeders/seeder.service.ts
+M	src/core/strategy/access.strategy.ts
+M	src/core/strategy/refresh.strategy.ts
+M	src/entities/course/course.module.ts
+M	src/entities/course/course.service.ts
+
+[33mcommit 87de27817e3da94167590c4114ce46f30206bd2a[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Tue Aug 26 22:37:27 2025 +0500
+
+    update
+
+M	src/entities/verification/dto/verification.dto.ts
+
+[33mcommit 406275ff3fc71ebf91b49f29dbcbb2cc7a80d78e[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Tue Aug 26 22:29:25 2025 +0500
+
+    uzb phone delte
+
+M	src/entities/verification/dto/verification.dto.ts
+
+[33mcommit 131e9c5f59b058d522ea8224d3fc1d1ef9d70628[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Mon Aug 25 21:14:28 2025 +0500
+
+    audio
+
+M	package.json
+
+[33mcommit a27c1fe5631a25cc852901b23af5c9319bfc1ed1[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Mon Aug 25 20:59:19 2025 +0500
+
+    audiot
+
+M	package-lock.json
+M	package.json
+M	src/app.module.ts
+
+[33mcommit 2a51094e461ba3035dde09ad36cc6fbd89f0dae6[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Mon Aug 25 18:26:08 2025 +0500
+
+    o
+
+D	.dockerignore
+D	.github/workflows/publish.yml
+D	Dockerfile
+D	docker-compose.yml
+M	src/common/redis/redis.service.ts
+M	src/common/seeders/seeder.service.ts
+M	src/entities/auth/auth.service.ts
+M	src/entities/verification/verification.controller.ts
+M	src/entities/verification/verification.service.ts
+M	src/main.ts
+
+[33mcommit d57ed0e93a3b3bf5c6eb44e27e92886cd143cfb4[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Thu Jul 31 16:35:05 2025 +0500
+
+    ishla
+
+M	.github/workflows/publish.yml
+
+[33mcommit 3cd1ae01dd4426ffd1a58502ef48c05bf2de593b[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Mon Jul 28 16:38:42 2025 +0500
+
+    ends
+
+M	.github/workflows/publish.yml
+
+[33mcommit 25465f15f28b93cfcf23e6915dba0780f87d835f[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Mon Jul 28 16:34:26 2025 +0500
+
+    end
+
+M	src/entities/auth/dto/auth.dto.ts
+
+[33mcommit a5b2133c586f0ea8fca6ca9e6c7292afb8722e45[m
+Author: Bobur815 <ergashevboburmirzo815@gmail.com>
+Date:   Sun Jul 27 13:56:54 2025 +0500
+
+    Body
+
+A	Dockerfile
+M	src/entities/auth/auth.controler.ts
+M	src/entities/auth/auth.service.ts
+
+[33mcommit f85d5d50a8933c671e0ec9f3ab24cb99a3b31df7[m
+Author: Bobur815 <ergashevboburmirzo815@gmail.com>
+Date:   Sun Jul 27 06:51:52 2025 +0500
+
+    last
+
+M	.dockerignore
+M	.github/workflows/publish.yml
+M	.gitignore
+M	.prettierrc
+D	DockerFile
+M	README.md
+M	docker-compose.yml
+M	eslint.config.mjs
+M	nest-cli.json
+M	package-lock.json
+M	package.json
+M	prisma/migrations/20250717103832_full/migration.sql
+M	prisma/migrations/20250718095231_ozgarish/migration.sql
+M	prisma/migrations/20250720185147_on_delete_cascade/migration.sql
+M	prisma/migrations/20250723060356_unique_update/migration.sql
+M	prisma/migrations/20250724033337_transaction/migration.sql
+M	prisma/migrations/20250724034256_decorator_unique/migration.sql
+M	prisma/migrations/migration_lock.toml
+M	prisma/schema.prisma
+M	src/app.module.ts
+M	src/common/redis/redis.model.ts
+M	src/common/redis/redis.service.ts
+M	src/common/services/sms.service.ts
+M	src/common/types/payme.ts
+M	src/common/types/penny.ts
+M	src/common/types/redis.ts
+M	src/common/types/sms.ts
+M	src/common/types/user.ts
+M	src/common/types/verification.ts
+M	src/common/utils/delete.fs.ts
+M	src/common/utils/random.ts
+M	src/common/utils/time.ts
+M	src/core/core.module/core.module.ts
+M	src/core/db/prisma.module.ts
+M	src/core/db/prisma.service.ts
+M	src/core/decorators/publick.decorator.ts
+M	src/core/guards/auth-guards.ts
+M	src/core/guards/refresh_guard.ts
+M	src/core/guards/role-guards.ts
+M	src/core/strategy/access.strategy.ts
+M	src/core/strategy/refresh.strategy.ts
+M	src/entities/auth/auth.controler.ts
+M	src/entities/auth/auth.module.ts
+M	src/entities/auth/auth.service.ts
+M	src/entities/auth/dto/auth.dto.ts
+M	src/entities/course/course-category/course-category.controller.ts
+M	src/entities/course/course-category/course-category.service.ts
+M	src/entities/course/course-category/dto/create-course-category.dto.ts
+M	src/entities/course/course-category/dto/update-course-category.dto.ts
+M	src/entities/course/course.controller.ts
+M	src/entities/course/course.module.ts
+M	src/entities/course/course.service.ts
+M	src/entities/course/dto/create-course.dto.ts
+M	src/entities/course/dto/query.dto.ts
+M	src/entities/course/dto/update-course.dto.ts
+M	src/entities/course/ratin/dto/create-ratin.dto.ts
+M	src/entities/course/ratin/ratin.controller.ts
+M	src/entities/course/ratin/ratin.service.ts
+M	src/entities/exam/dto/create-exam.dto.ts
+M	src/entities/exam/dto/update-exam.dto.ts
+M	src/entities/exam/entities/exam.entity.ts
+M	src/entities/exam/exam.controller.ts
+M	src/entities/exam/exam.module.ts
+M	src/entities/exam/exam.service.ts
+M	src/entities/homework/dto/create-homework.dto.ts
+M	src/entities/homework/dto/update-homework.dto.ts
+M	src/entities/homework/homework.controller.ts
+M	src/entities/homework/homework.module.ts
+M	src/entities/homework/homework.service.ts
+M	src/entities/lesson/dto/view-lesson.dto.ts
+M	src/entities/lesson/entities/lesson.entity.ts
+M	src/entities/payments/dto/create-payment.dto.ts
+M	src/entities/payments/payments.controller.ts
+M	src/entities/payments/payments.module.ts
+M	src/entities/payments/payments.service.ts
+M	src/entities/puchased-course/dto/purchased-courses.dto.ts
+M	src/entities/puchased-course/puchased-course.service.ts
+M	src/entities/puchased-course/purchased-course.controller.ts
+M	src/entities/user/dto/create-user.dto.ts
+M	src/entities/user/dto/query.dto.ts
+M	src/entities/user/dto/update-user.dto.ts
+M	src/entities/user/user.controller.ts
+M	src/entities/user/user.module.ts
+M	src/entities/user/user.service.ts
+M	src/entities/verification/dto/verification.dto.ts
+M	src/entities/verification/verification.controller.ts
+M	src/entities/verification/verification.module.ts
+M	src/entities/verification/verification.service.ts
+M	src/main.ts
+M	test/app.e2e-spec.ts
+M	test/jest-e2e.json
+M	tsconfig.build.json
+M	tsconfig.json
+
+[33mcommit 7cbf15ebdc54b42a55490e3f30f35962ebfeeb01[m
+Author: Yandiev <azizdavronov2005@gmail.com>
+Date:   Sat Jul 26 16:41:05 2025 +0500
+
+    ends
+
+M	src/app.module.ts
+A	src/common/seeders/seeder.module.ts
+A	src/common/seeders/seeder.service.ts
+M	src/core/decorators/role.decorator.ts
+A	src/core/guards/role-guards.ts
+M	src/entities/lesson/dto/create-lesson.dto.ts
+M	src/entities/lesson/dto/update-lesson.dto.ts
+A	src/entities/lesson/dto/view-lesson.dto.ts
+M	src/entities/lesson/lesson.controller.ts
+M	src/entities/lesson/lesson.module.ts
+M	src/entities/lesson/lesson.service.ts
+M	src/entities/puchased-course/puchased-course.service.ts
+M	src/entities/puchased-course/purchased-course.controller.ts
+
+[33mcommit 00af8b41734036bb54f5eb4b785e7d23ba72fdf3[m
+Author: Bobur815 <ergashevboburmirzo815@gmail.com>
+Date:   Sat Jul 26 14:42:36 2025 +0500
+
+    l
+
+M	DockerFile
+
+[33mcommit f067175922b821557a1ff768ad1476cc9c9f2660[m
+Author: Bobur815 <ergashevboburmirzo815@gmail.com>
+Date:   Sat Jul 26 14:17:03 2025 +0500
+
+    l
+
+M	.github/workflows/publish.yml
+
+[33mcommit 4f
