@@ -13,7 +13,7 @@ export class RefreshJwtStrategy extends PassportStrategy(
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
-          let token = req?.cookies?.['refresh-jwt'];
+          let token = req?.cookies?.['refresh-token'];
           return token ?? null;
         },
       ]),

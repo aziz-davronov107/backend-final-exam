@@ -16,9 +16,9 @@ import { CourseCategoryService } from './course-category/course-category.service
       storage: diskStorage({
         destination: (req, file, cb) => {
           if (file.fieldname === 'banner') {
-            cb(null, './uploads/banner');
+            cb(null, '../uploads/banner');
           } else if (file.fieldname === 'introVideo') {
-            cb(null, './uploads/introvideo');
+            cb(null, '../uploads/introvideo');
           }
         },
         filename: (req, file, cb) => {

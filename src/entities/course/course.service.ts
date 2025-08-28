@@ -341,11 +341,11 @@ export class CoursesService {
           process.cwd(),
           old.introVideo.split('/api/')[1],
         );
-        await deleteIfExists(introUrlpath);
+        deleteIfExists(introUrlpath);
       }
       if (old && update.banner && old.banner) {
         let bannerpath = path.join(process.cwd(), old.banner.split('/api/')[1]);
-        await deleteIfExists(bannerpath);
+        deleteIfExists(bannerpath);
       }
     }
     let updated = await this.prisma.course.update({
