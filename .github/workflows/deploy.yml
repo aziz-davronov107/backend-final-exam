@@ -40,12 +40,12 @@ jobs:
             sudo usermod -aG docker $USER || true
 
             echo "🛑 Stopping containers..."
-            sudo docker compose down || true
+            docker compose down || true
 
             echo "🔨 Building containers..."
-            sudo docker compose build
+            docker compose build
 
             echo "🚀 Starting containers..."
-            sudo docker compose up -d
+            docker compose up -d
 
             echo "✅ Deployment finished!"
