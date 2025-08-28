@@ -11,6 +11,6 @@ RUN npx prisma generate
 
 RUN npm run build
 
-EXPOSE 3000
+EXPOSE 1170
 
 CMD ["node", "dist/main"]
