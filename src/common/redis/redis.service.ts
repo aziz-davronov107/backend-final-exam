@@ -6,7 +6,12 @@ export class MyRedisService {
   private client: Redis;
 
   async onModuleInit() {
-    this.client = new Redis(process.env.REDIS_URL!);
+    this.client = new Redis(
+      {
+      host: process.env.REDIS_HOST || 'localhost',
+      port: Number(process.env.REDIS_PORT) || 6379,
+    }
+    );
   }
 
   async set(key: string, value: string, second: number) {
