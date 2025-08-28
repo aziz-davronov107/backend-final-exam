@@ -1,0 +1,52 @@
+name: Deploy NestJS with Prisma and Redis to VPS using Docker Compose
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Deploy over SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          port: 22
+          script: |
+            echo "📁 Creating project folder if it doesn't exist..."
+            mkdir -p ~/azizbek
+            cd ~/azizbek
+
+            if [ ! -d "backend-final-exam" ]; then
+              echo "🚀 Cloning repository..."
+              git clone https://github.com/aziz-davronov107/backend-final-exam.git
+            else
+              echo "📦 Pulling latest changes..."
+              cd backend-final-exam
+              git pull origin main
+            fi
+
+            cd ~/azizbek/backend-final-exam
+
+            echo "👨‍🔧 Giving Docker permissions..."
+            sudo usermod -aG docker $USER || true
+
+            echo "🛑 Stopping containers..."
+            sudo docker compose down || true
+
+            echo "🔨 Building containers..."
+            sudo docker compose build
+
+            echo "🚀 Starting containers..."
+            sudo docker compose up -d
+            
+
+            echo "✅ Deployment finished!"
