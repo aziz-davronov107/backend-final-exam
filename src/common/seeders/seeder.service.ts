@@ -101,6 +101,8 @@ export class SeederService implements OnModuleInit {
       await this.prisma.course.createMany({
         data:courses
       })
+      console.log(categories,"qoshildi");
+      
 
       console.log('✅ Superadmin user created!');
     } else {
