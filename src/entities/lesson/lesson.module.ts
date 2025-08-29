@@ -3,7 +3,7 @@
   import { LessonsService } from './lesson.service';
   import { MulterModule } from '@nestjs/platform-express';
   import { diskStorage } from 'multer';
-  import { extname } from 'path';
+  import path, { extname } from 'path';
   import { v4 as uuidv4 } from 'uuid';
   import { BadRequestException } from '@nestjs/common';
 
@@ -12,7 +12,7 @@
       MulterModule.register({
         storage: diskStorage({
           destination: (req, file, cb) => {
-            cb(null, './uploads/video');
+            cb(null, path.join(process.cwd(), 'uploads/video'));
           },
           filename: (req, file, cb) => {
             const fileExt = extname(file.originalname);
