@@ -31,9 +31,9 @@ jobs:
             else
               echo "📦 Pulling latest changes..."
               cd backend-final-exam
+              git reset --hard origin/main
               git pull origin main
             fi
-
             cd ~/azizbek/backend-final-exam
 
             echo "👨‍🔧 Giving Docker permissions..."
