@@ -147,10 +147,10 @@ export class CoursesController {
   ) {
     const bannerFile = files.banner?.[0];
     const introVidFile = files.introVideo?.[0];
-    const bannerUrl = `${process.env.STATIC_URL}banner/${bannerFile.filename}`;
-    const introUrl = introVidFile
-      ? `${process.env.STATIC_URL}introvideo/${introVidFile.filename}`
-      : null;
+    const bannerUrl = bannerFile ? `${process.env.STATIC_URL}banner/${bannerFile.filename}` : null;
+
+    const introUrl = introVidFile? `${process.env.STATIC_URL}introVideo/${introVidFile.filename}` : null;
+
     const { banner, introVideo, ...courseData } = body;
     return this.coursesService.createCourse(
       { ...courseData, banner: bannerUrl, introVideo: introUrl },
@@ -181,12 +181,9 @@ export class CoursesController {
   ) {
     const bannerFile = files.banner?.[0];
     const introVidFile = files.introVideo?.[0];
-    const bannerUrl = bannerFile
-      ? `${process.env.STATIC_URL}banner/${bannerFile.filename}`
-      : null;
-    const introUrl = introVidFile
-      ? `${process.env.STATIC_URL}introvideo/${introVidFile.filename}`
-      : null;
+    const bannerUrl = bannerFile ? `${process.env.STATIC_URL}banner/${bannerFile.filename}` : null;
+    const introUrl = introVidFile? `${process.env.STATIC_URL}introVideo/${introVidFile.filename}` : null;
+    
     const { banner, introVideo, ...courseData } = body;
     return this.coursesService.updateCourse(id, {
       banner: bannerUrl,

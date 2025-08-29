@@ -12,9 +12,15 @@ import { AccessTokenGuard } from './core/guards/auth-guards';
 import { PuchasedCourseModule } from './entities/puchased-course/purchased-course.module';
 import { RolesGuard } from './core/guards/role-guards';
 import { SeederModule } from './common/seeders/seeder.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import path from 'path';
 
 @Module({
   imports: [
+      ServeStaticModule.forRoot({
+      rootPath: path.join(process.cwd(), 'uploads'), // uploads papkani serve qiladi
+      serveRoot: '/static',                     // URL prefix
+    }),
     CoreModule,
     UserModule,
     CourseModule,
@@ -27,6 +33,7 @@ import { SeederModule } from './common/seeders/seeder.module';
     SeederModule,
     
   ],
+  
   providers: [
     {
       provide: APP_GUARD,

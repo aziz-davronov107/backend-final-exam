@@ -288,10 +288,11 @@ export class CoursesService {
         userId_courseId: { userId: body.userId, courseId: body.courseId },
       },
     });
-    if (!exist_assistant)
+    if (exist_assistant)
       throw new ConflictException(
-        'This assistant Not found assigned to course',
-      );
+        'This assistant already assigned to course',
+    );
+
     let assistant = await this.prisma.assignedCourse.create({
       data: body,
     });

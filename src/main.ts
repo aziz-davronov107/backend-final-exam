@@ -4,8 +4,10 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { ValidationPipe } from '@nestjs/common';
 
+
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
   app.use(cookieParser());
   app.useGlobalPipes(
     new ValidationPipe({
@@ -13,21 +15,20 @@ async function bootstrap() {
       whitelist: true,
       forbidUnknownValues: true,
     }),
-    
   );
-  app.setGlobalPrefix('api');
-  app.enableCors()
 
+  app.setGlobalPrefix('api');
+  app.enableCors();
   const config = new DocumentBuilder()
-    .setTitle('User API')
-    .setDescription('Foydalanuvchi CRUD endpointlari')
+    .setTitle('LMS API')
+    .setDescription('Kurslar va foydalanuvchilar uchun API')
     .setVersion('1.0')
-    .addTag('users')
+    .addTag('courses')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
-  await app.listen(process.env.PORT ?? 3001);
 
+  await app.listen(process.env.PORT ?? 3001);
 }
 bootstrap();
