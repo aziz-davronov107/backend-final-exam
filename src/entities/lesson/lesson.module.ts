@@ -3,7 +3,7 @@
   import { LessonsService } from './lesson.service';
   import { MulterModule } from '@nestjs/platform-express';
   import { diskStorage } from 'multer';
-  import path, { extname } from 'path';
+  import * as path from 'path';
   import { v4 as uuidv4 } from 'uuid';
   import { BadRequestException } from '@nestjs/common';
 
@@ -15,7 +15,7 @@
             cb(null, path.join(process.cwd(), 'uploads/video'));
           },
           filename: (req, file, cb) => {
-            const fileExt = extname(file.originalname);
+            const fileExt = path.extname(file.originalname);
             const uniqueName = `${uuidv4()}${fileExt}`;
             cb(null, uniqueName);
           },

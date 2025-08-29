@@ -1,7 +1,7 @@
 import { BadRequestException, Module } from '@nestjs/common';
 import { CoursesController } from './course.controller';
 import { CoursesService } from './course.service';
-import path, { extname } from 'path';
+import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
@@ -22,7 +22,7 @@ import { CourseCategoryService } from './course-category/course-category.service
           }
         },
         filename: (req, file, cb) => {
-          const fileExt = extname(file.originalname);
+          const fileExt = path.extname(file.originalname);
           const uniqueName = `${uuidv4()}${fileExt}`;
           cb(null, uniqueName);
         },
