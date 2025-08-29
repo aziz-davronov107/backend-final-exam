@@ -195,7 +195,7 @@ export class CoursesController {
   @Post('publish/:id')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'ADMIN' })
-  @ApiParam({ name: 'id', type: IsUUID })
+  @ApiParam({ name: 'id', type: String })
   publishCourse(@Param('id') id: string) {
     return this.coursesService.publishCourse(id);
   }
@@ -203,7 +203,7 @@ export class CoursesController {
   @Post('unpublish/:id')
   @Roles('ADMIN')
   @ApiOperation({ summary: 'ADMIN' })
-  @ApiParam({ name: 'id', type: IsUUID })
+  @ApiParam({ name: 'id', type: String })
   unpublishCourse(@Param('id') id: string) {
     return this.coursesService.unpublishCourse(id);
   }
@@ -218,7 +218,7 @@ export class CoursesController {
   @Delete('delete/:id')
   @Roles('ADMIN', 'MENTOR')
   @ApiOperation({ summary: 'ADMIN,MENTOR' })
-  @ApiParam({ name: 'id', type: IsUUID })
+  @ApiParam({ name: 'id', type: String })
   deleteCourse(@Param('id') id: string) {
     return this.coursesService.deleteCourse(id);
   }

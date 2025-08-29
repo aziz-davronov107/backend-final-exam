@@ -4,7 +4,7 @@ import {
   Req
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags, ApiOperation, ApiConsumes, ApiBody } from '@nestjs/swagger';
+import { ApiTags, ApiOperation, ApiConsumes, ApiBody, ApiParam } from '@nestjs/swagger';
 import { UserRole } from '@prisma/client';
 import { Roles } from 'src/core/decorators/role.decorator';
 
@@ -20,6 +20,7 @@ export class LessonsController {
   @Get('single/:lessonId')
   @Roles(UserRole.STUDENT)
   @ApiOperation({ summary: 'STUDENT' })
+  @ApiParam({ name: 'id', type: String })
   getSingleLesson(@Param('lessonId')  lessonId: string, @Req() req: any) {
     return this.lessonsService.getSingleLesson(req.user.id,lessonId);
   }
@@ -34,6 +35,7 @@ export class LessonsController {
   @Get('detail/:id')
   @Roles(UserRole.ADMIN, UserRole.MENTOR)
   @ApiOperation({ summary: 'ADMIN,MENTOR' })
+  @ApiParam({ name: 'id', type: String })
   getLessonDetail(@Param('id') id: string) {
     return this.lessonsService.getLessonDetail(id);
   }

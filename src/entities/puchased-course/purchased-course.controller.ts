@@ -24,7 +24,7 @@ export class PurchasedCoursesController {
 
   @Get('mine/:course_id')
   @Roles(UserRole.STUDENT)
-  @ApiParam({ name: 'course_id', type: IsUUID, description: 'Course ID'})
+  @ApiParam({ name: 'course_id', type: String, description: 'Course ID'})
   getMineById(@Req() req, @Param('course_id') courseId: string) {
     return this.service.getMineById(req.user.id, courseId);
   }
@@ -37,6 +37,7 @@ export class PurchasedCoursesController {
 
   @Get('course/:id/students')
   @Roles(UserRole.MENTOR, UserRole.ADMIN)
+  @ApiParam({ name: 'id', type: String })
   getCourseStudents(@Param('id') courseId: string, @Query() query: GetCourseStudentsQueryDto) {
     return this.service.getCourseStudents(courseId, query);
   }

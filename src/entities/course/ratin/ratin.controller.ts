@@ -28,7 +28,7 @@ export class CourseRatingController {
   }
 
   @Public()
-  @ApiParam({name:"courseId",type:IsUUID,required:true})
+  @ApiParam({name:"courseId",type:String,required:true})
   @ApiQuery({name:"offset",type:Number,example:0})
   @ApiQuery({name:"limit",type:Number,example:8})
   @Get('list/:courseId')
@@ -41,7 +41,7 @@ export class CourseRatingController {
   }
 
   @Public()
-  @ApiParam({name:"courseId",type:IsUUID,required:true})
+  @ApiParam({name:"courseId",type:String,required:true})
   @Get('analytics/:courseId')
   async getAnalytics(@Param('courseId') courseId: string) {
     return this.courseRatingService.getAnalytics(courseId);
