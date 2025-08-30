@@ -346,12 +346,12 @@ export class CoursesService {
       if (old && update.introVideo && old.introVideo) {
         let introUrlpath = path.join(
           process.cwd(),
-          old.introVideo.split('/api/')[1],
+          old.introVideo.split('/staic/')[1],
         );
         deleteIfExists(introUrlpath);
       }
       if (old && update.banner && old.banner) {
-        let bannerpath = path.join(process.cwd(), old.banner.split('/api/')[1]);
+        let bannerpath = path.join(process.cwd(), old.banner.split('/static/')[1]);
         deleteIfExists(bannerpath);
       }
     }
@@ -440,15 +440,15 @@ export class CoursesService {
     }
     let bannerpath = path.join(
       process.cwd(),
-      exist_course.banner.split('/api/')[1],
+      exist_course.banner.split('/static/')[1],
     );
-    await deleteIfExists(bannerpath);
+     deleteIfExists(bannerpath);
     if (exist_course.introVideo) {
       let introVideoPath = path.join(
         process.cwd(),
-        exist_course.introVideo.split('/api/')[1],
+        exist_course.introVideo.split('/static/')[1],
       );
-      await deleteIfExists(introVideoPath);
+     deleteIfExists(introVideoPath);
     }
     await this.prisma.course.delete({ where: { id } });
     return { message: true };
