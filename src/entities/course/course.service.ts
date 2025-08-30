@@ -322,8 +322,14 @@ export class CoursesService {
     };
   }
   async createCourse(dto: CreateCourseDto, mentorId: number) {
-    let course = await this.prisma.course.create({
-      data: { ...dto, mentorId },
+    let  mentor = await this.prisma.user.findUnique({where:{id:mentorId}})
+
+    const course = await this.prisma.course.create({
+      data: {
+        ...dto,
+        mentorId,
+        published: mentor?.role === UserRole.ADMIN,
+      },
     });
 
     return { message: true, data: course };
