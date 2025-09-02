@@ -13,6 +13,7 @@ import { PuchasedCourseModule } from './entities/puchased-course/purchased-cours
 import { RolesGuard } from './core/guards/role-guards';
 import { SeederModule } from './common/seeders/seeder.module';
 import { ServeStaticModule } from '@nestjs/serve-static';
+import { ProfileModule } from './entities/profile/profile.module';
 import * as path from 'path';
 
 @Module({
@@ -31,6 +32,7 @@ import * as path from 'path';
     AuthModule,
     PuchasedCourseModule,
     SeederModule,
+    ProfileModule,
     
   ],
   
