@@ -11,6 +11,7 @@ import {
   CreateMentorDto,
 } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { UserRole } from '@prisma/client';
 
 @Injectable()
 export class UserService {
@@ -165,10 +166,10 @@ export class UserService {
       where: { phone: payload.phone },
     });
     if (user) {
-      throw new ConflictException('User already exists!');
+      throw new ConflictException('Mentor already exists!');
     }
     let { phone, fullName, password, ...profile } = payload;
-    let new_user = await this.prisma.user.create({ data: payload });
+    let new_user = await this.prisma.user.create({ data: {phone, fullName, password,role:UserRole.MENTOR} });
     await this.prisma.mentorProfile.create({
       data: { ...profile, userId: new_user.id },
     });

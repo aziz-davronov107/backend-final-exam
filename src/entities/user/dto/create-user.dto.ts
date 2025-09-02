@@ -81,27 +81,22 @@ export class CreateMentorDto {
   @IsOptional()
   telegram?: string;
 
-  @ApiProperty({ example: 'string' })
   @IsUrl()
   @IsOptional()
   facebook?: string;
 
-  @ApiProperty({ example: 'string' })
   @IsUrl()
   @IsOptional()
   instagram?: string;
 
-  @ApiProperty({ example: 'string' })
   @IsUrl()
   @IsOptional()
   linkedin?: string;
 
-  @ApiProperty({ example: 'string' })
   @IsUrl()
   @IsOptional()
   github?: string;
 
-  @ApiProperty({ example: 'string' })
   @IsUrl()
   @IsOptional()
   website?: string;
