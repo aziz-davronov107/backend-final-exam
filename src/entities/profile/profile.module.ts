@@ -5,6 +5,7 @@ import * as path from 'path';
 import { v4 as uuidv4 } from 'uuid';
 import { MulterModule } from '@nestjs/platform-express';
 import { diskStorage } from 'multer';
+import { VerificationModule } from '../verification/verification.module';
 
 @Module({
     imports: [
@@ -29,6 +30,7 @@ import { diskStorage } from 'multer';
       },
       limits: { fileSize: 50 * 1024 * 1024 },
     }),
+    VerificationModule,
     ],
   providers: [ProfileService],
   controllers: [ProfileController]
