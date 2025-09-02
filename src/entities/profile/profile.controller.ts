@@ -4,6 +4,7 @@ import { Request } from 'express';
 import { FileFieldsInterceptor } from '@nestjs/platform-express';
 import { ProfileUpdateDto } from './dto/update.profile.dto';
 import { Roles } from 'src/core/decorators/role.decorator';
+import { ApiConsumes } from '@nestjs/swagger';
 
 @Controller('my')
 export class ProfileController {
@@ -20,6 +21,7 @@ export class ProfileController {
           ]),
     )
   @Patch('profile')
+  @ApiConsumes('multipart/form-data')
   @Roles('MENTOR','ADMIN','STUDENT','ASSISTANT')
   updateProfile( @Req() req: Request,@Body() dto:ProfileUpdateDto, @UploadedFiles() files?: {  avatar?: Express.Multer.File[];  },) {
     const avatarFile = files?.avatar?.[0];
